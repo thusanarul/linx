@@ -8,6 +8,11 @@ RUN cargo build --release
 
 FROM debian:bullseye-slim
 
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    libssl1.1 \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY --from=builder  /app/target/release/api /bin/app/api
 WORKDIR /bin/app
 
